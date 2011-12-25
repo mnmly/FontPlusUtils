@@ -11,7 +11,7 @@ requires additional request to get new characters.</p>             </td>        
 
 <ul>
 <li>FontLoadedEvent(requires <a href="https://github.com/typekit/webfontloader">webfontloader</a>)</li>
-<li>fontPlusInstance maps to Font<em>Plus</em>abcdefg 32 random chars with <code>Font_Plus_</code> prefix</li>
+<li>fontPlusInstance maps to FontPlus instance </li>
 </ul>             </td>             <td class="code">               <div class="highlight"><pre><span class="k">class</span> <span class="nx">FontPlusUtils</span>
 
   <span class="nv">_getFontPlusInstance = </span><span class="o">-&gt;</span>
@@ -84,7 +84,7 @@ fontFamily from style attribute</p>             </td>             <td class="cod
           <span class="k">if</span> <span class="nx">text</span> <span class="o">is</span> <span class="mi">0</span></pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>If this is the font active event from the initial load from stylesheets</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="nx">@trigger</span><span class="p">(</span><span class="s1">&#39;initialactive&#39;</span><span class="p">)</span>
           </pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p>Remove duplicate stylesheets</p>             </td>             <td class="code">               <div class="highlight"><pre>          <span class="nv">fontPlusCSS = </span><span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;[id=fontplus_css]&#39;</span><span class="p">)</span>
           <span class="k">if</span> <span class="nx">fontPlusCSS</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">1</span>
-            <span class="nb">document</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">removeChild</span> <span class="nx">fontPlusCSS</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="nb">document</span><span class="p">.</span><span class="nx">head</span><span class="p">.</span><span class="nx">removeChild</span> <span class="nx">fontPlusCSS</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
           
           <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="s2">&quot;active&quot;</span><span class="p">,</span> <span class="nx">uid</span>
           <span class="vi">@isLoading = </span><span class="kc">no</span>

@@ -114,7 +114,7 @@ class FontPlusUtils
           # Remove duplicate stylesheets
           fontPlusCSS = document.querySelectorAll('[id=fontplus_css]')
           if fontPlusCSS.length > 1
-            document.head.removeChild fontPlusCSS[1]
+            document.head.removeChild fontPlusCSS[0]
           
           console.log "active", uid
           @isLoading = no

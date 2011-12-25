@@ -92,7 +92,7 @@
             var fontPlusCSS;
             if (text === 0) _this.trigger('initialactive');
             fontPlusCSS = document.querySelectorAll('[id=fontplus_css]');
-            if (fontPlusCSS.length > 1) document.head.removeChild(fontPlusCSS[1]);
+            if (fontPlusCSS.length > 1) document.head.removeChild(fontPlusCSS[0]);
             console.log("active", uid);
             _this.isLoading = false;
             return _this.trigger('active', uid);
