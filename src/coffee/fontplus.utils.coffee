@@ -1,4 +1,3 @@
-#
 #### FontPlusUtils
 # FontPlusUtils provides additional api to deal 
 # with FontPlus js library
@@ -13,8 +12,7 @@
 
 # FontPlusUtils will provide following utilities
 # - FontLoadedEvent(requires [webfontloader](https://github.com/typekit/webfontloader))
-# - fontPlusInstance maps to Font_Plus_abcdefg..... 32 random chars with `Font_Plus_` prefix
-# 
+# - fontPlusInstance maps to Font_Plus_abcdefg 32 random chars with `Font_Plus_` prefix
 
 class FontPlusUtils
 
@@ -125,9 +123,6 @@ class FontPlusUtils
           @isLoading = no
           @trigger('inactive', uid)
           
-          
-
-  #### Evented
   # It will provide small PubSub functionality.
   bind: (e, fn) ->
     @events[e] ?= []
@@ -146,4 +141,5 @@ class FontPlusUtils
       i--
     return @
 
+# Export to global
 window.FontPlusUtils = FontPlusUtils
