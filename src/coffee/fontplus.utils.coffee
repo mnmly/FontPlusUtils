@@ -11,8 +11,9 @@
 # requires additional request to get new characters.
 
 # FontPlusUtils will provide following utilities
-# - FontLoadedEvent(requires [webfontloader](https://github.com/typekit/webfontloader))
-# - fontPlusInstance maps to Font_Plus_abcdefg 32 random chars with `Font_Plus_` prefix
+# 
+# * FontLoadedEvent(requires [webfontloader](https://github.com/typekit/webfontloader))
+# * fontPlusInstance maps to FontPlus instance 
 
 class FontPlusUtils
 
@@ -29,36 +30,36 @@ class FontPlusUtils
     fontNames = []
     for styleSheet in document.styleSheets
       rules = if styleSheet.cssRules then styleSheet.cssRules else styleSheet.ruless
-      for rule in rules
-        if rule.style?.fontFamily?
-          fontList = rule.style.fontFamily
-                      .replace(/'/g, "") # Remove single quotation marks
-                      .replace(/"/g, "") # Remove double quotation marks
-                      .split(",") # Make string into array
+      for rule in rules when rule.style?.fontFamily?
+        fontList = rule.style.fontFamily
+                    .replace(/'/g, "") # Remove single quotation marks
+                    .replace(/"/g, "") # Remove double quotation marks
+                    .split(",") # Make string into array
 
-          for f in fontList
-            if f.length > 0
-              f = f.replace(/^\s+|\s+$/g, '') # Removed unnecessary whitespace
-              if that.fontPlusInstance.plusf.indexOf(f) > -1
-                fontNames.push f
+        for f in fontList
+          f = f.replace(/^\s+|\s+$/g, '') # Removed unnecessary whitespace
+          if that.fontPlusInstance.plusf.indexOf(f) > -1
+            fontNames.push f
 
     return fontNames
 
   _uniqueId = 0
-
+  
+  _getUniqueId = ->
+    _uid = "fpu" + ( _uniqueId++ )
+  
+  # Constructor requires `WebFont`
   constructor: (@WebFont)->
-    # If WebFontLoader doesn't exist, it throws an error :)
+    return unless @WebFont?
     @events = {}
     @fontPlusInstance = _getFontPlusInstance()
 
     # Kickoff monitoring initial Load Event.
-    @attachLoadEvent @getUniqueId(), _checkFontFromStyle(@), 0
+    @attachLoadEvent _getUniqueId(), _checkFontFromStyle(@), 0
   
-  getUniqueId: ->
-    _uid = "fpu" + ( _uniqueId++ )
     
   getFontForText: (fontNames, text)->
-    _uid = @getUniqueId()
+    _uid = _getUniqueId()
 
     _fontNames = fontNames
     # if fontNames is array, join it to comma separated string

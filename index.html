@@ -7,9 +7,12 @@ when asynchronous rendering is required, it won't render charactors
 which was not loaded on first request.</p>
 
 <p>Therefore to render the new block text using fontplus typeface, it
-requires additional request to get new characters.</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>FontPlusUtils will provide following utilities
-- FontLoadedEvent(requires <a href="https://github.com/typekit/webfontloader">webfontloader</a>)
-- fontPlusInstance maps to Font<em>Plus</em>abcdefg 32 random chars with <code>Font_Plus_</code> prefix</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="k">class</span> <span class="nx">FontPlusUtils</span>
+requires additional request to get new characters.</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>FontPlusUtils will provide following utilities</p>
+
+<ul>
+<li>FontLoadedEvent(requires <a href="https://github.com/typekit/webfontloader">webfontloader</a>)</li>
+<li>fontPlusInstance maps to Font<em>Plus</em>abcdefg 32 random chars with <code>Font_Plus_</code> prefix</li>
+</ul>             </td>             <td class="code">               <div class="highlight"><pre><span class="k">class</span> <span class="nx">FontPlusUtils</span>
 
   <span class="nv">_getFontPlusInstance = </span><span class="o">-&gt;</span>
     <span class="k">for</span> <span class="nx">prop</span> <span class="k">of</span> <span class="nb">window</span>
@@ -22,31 +25,31 @@ requires additional request to get new characters.</p>             </td>        
     <span class="nv">fontNames = </span><span class="p">[]</span>
     <span class="k">for</span> <span class="nx">styleSheet</span> <span class="k">in</span> <span class="nb">document</span><span class="p">.</span><span class="nx">styleSheets</span>
       <span class="nv">rules = </span><span class="k">if</span> <span class="nx">styleSheet</span><span class="p">.</span><span class="nx">cssRules</span> <span class="k">then</span> <span class="nx">styleSheet</span><span class="p">.</span><span class="nx">cssRules</span> <span class="k">else</span> <span class="nx">styleSheet</span><span class="p">.</span><span class="nx">ruless</span>
-      <span class="k">for</span> <span class="nx">rule</span> <span class="k">in</span> <span class="nx">rules</span>
-        <span class="k">if</span> <span class="nx">rule</span><span class="p">.</span><span class="nx">style</span><span class="o">?</span><span class="p">.</span><span class="nx">fontFamily</span><span class="o">?</span>
-          <span class="nv">fontList = </span><span class="nx">rule</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">fontFamily</span>
-                      <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&#39;/g</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="c1"># Remove single quotation marks</span>
-                      <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&quot;/g</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="c1"># Remove double quotation marks</span>
-                      <span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="c1"># Make string into array</span>
+      <span class="k">for</span> <span class="nx">rule</span> <span class="k">in</span> <span class="nx">rules</span> <span class="k">when</span> <span class="nx">rule</span><span class="p">.</span><span class="nx">style</span><span class="o">?</span><span class="p">.</span><span class="nx">fontFamily</span><span class="o">?</span>
+        <span class="nv">fontList = </span><span class="nx">rule</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">fontFamily</span>
+                    <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&#39;/g</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="c1"># Remove single quotation marks</span>
+                    <span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/&quot;/g</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="c1"># Remove double quotation marks</span>
+                    <span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span> <span class="c1"># Make string into array</span>
 
-          <span class="k">for</span> <span class="nx">f</span> <span class="k">in</span> <span class="nx">fontList</span>
-            <span class="k">if</span> <span class="nx">f</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span>
-              <span class="nv">f = </span><span class="nx">f</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/^\s+|\s+$/g</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="c1"># Removed unnecessary whitespace</span>
-              <span class="k">if</span> <span class="nx">that</span><span class="p">.</span><span class="nx">fontPlusInstance</span><span class="p">.</span><span class="nx">plusf</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span>
-                <span class="nx">fontNames</span><span class="p">.</span><span class="nx">push</span> <span class="nx">f</span>
+        <span class="k">for</span> <span class="nx">f</span> <span class="k">in</span> <span class="nx">fontList</span>
+          <span class="nv">f = </span><span class="nx">f</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/^\s+|\s+$/g</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="c1"># Removed unnecessary whitespace</span>
+          <span class="k">if</span> <span class="nx">that</span><span class="p">.</span><span class="nx">fontPlusInstance</span><span class="p">.</span><span class="nx">plusf</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">f</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="nx">fontNames</span><span class="p">.</span><span class="nx">push</span> <span class="nx">f</span>
 
     <span class="k">return</span> <span class="nx">fontNames</span>
 
   <span class="nv">_uniqueId = </span><span class="mi">0</span>
-
-  <span class="nv">constructor: </span><span class="nf">(@WebFont)-&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>If WebFontLoader doesn't exist, it throws an error :)</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="vi">@events = </span><span class="p">{}</span>
-    <span class="vi">@fontPlusInstance = </span><span class="nx">_getFontPlusInstance</span><span class="p">()</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Kickoff monitoring initial Load Event.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">@attachLoadEvent</span> <span class="nx">@getUniqueId</span><span class="p">(),</span> <span class="nx">_checkFontFromStyle</span><span class="p">(</span><span class="err">@</span><span class="p">),</span> <span class="mi">0</span>
   
-  <span class="nv">getUniqueId: </span><span class="o">-&gt;</span>
+  <span class="nv">_getUniqueId = </span><span class="o">-&gt;</span>
     <span class="nv">_uid = </span><span class="s2">&quot;fpu&quot;</span> <span class="o">+</span> <span class="p">(</span> <span class="nx">_uniqueId</span><span class="o">++</span> <span class="p">)</span>
+  </pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Constructor requires <code>WebFont</code></p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">constructor: </span><span class="nf">(@WebFont)-&gt;</span>
+    <span class="k">return</span> <span class="nx">unless</span> <span class="nx">@WebFont</span><span class="o">?</span>
+    <span class="vi">@events = </span><span class="p">{}</span>
+    <span class="vi">@fontPlusInstance = </span><span class="nx">_getFontPlusInstance</span><span class="p">()</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Kickoff monitoring initial Load Event.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nx">@attachLoadEvent</span> <span class="nx">_getUniqueId</span><span class="p">(),</span> <span class="nx">_checkFontFromStyle</span><span class="p">(</span><span class="err">@</span><span class="p">),</span> <span class="mi">0</span>
+  
     
   <span class="nv">getFontForText: </span><span class="nf">(fontNames, text)-&gt;</span>
-    <span class="nv">_uid = </span><span class="nx">@getUniqueId</span><span class="p">()</span>
+    <span class="nv">_uid = </span><span class="nx">_getUniqueId</span><span class="p">()</span>
 
     <span class="nv">_fontNames = </span><span class="nx">fontNames</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>if fontNames is array, join it to comma separated string</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="k">if</span> <span class="nx">_isArray</span><span class="p">(</span><span class="nx">fontNames</span><span class="p">)</span>
       <span class="nv">_fontNames = </span><span class="nx">fontNames</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;&quot;, &quot;&#39;</span><span class="p">)</span>

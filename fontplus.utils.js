@@ -2,7 +2,7 @@
   var FontPlusUtils;
 
   FontPlusUtils = (function() {
-    var _checkFontFromStyle, _getFontPlusInstance, _isArray, _uniqueId;
+    var _checkFontFromStyle, _getFontPlusInstance, _getUniqueId, _isArray, _uniqueId;
 
     _getFontPlusInstance = function() {
       var prop;
@@ -24,15 +24,14 @@
         rules = styleSheet.cssRules ? styleSheet.cssRules : styleSheet.ruless;
         for (_j = 0, _len2 = rules.length; _j < _len2; _j++) {
           rule = rules[_j];
-          if (((_ref2 = rule.style) != null ? _ref2.fontFamily : void 0) != null) {
-            fontList = rule.style.fontFamily.replace(/'/g, "").replace(/"/g, "").split(",");
-            for (_k = 0, _len3 = fontList.length; _k < _len3; _k++) {
-              f = fontList[_k];
-              if (f.length > 0) {
-                f = f.replace(/^\s+|\s+$/g, '');
-                if (that.fontPlusInstance.plusf.indexOf(f) > -1) fontNames.push(f);
-              }
-            }
+          if (!(((_ref2 = rule.style) != null ? _ref2.fontFamily : void 0) != null)) {
+            continue;
+          }
+          fontList = rule.style.fontFamily.replace(/'/g, "").replace(/"/g, "").split(",");
+          for (_k = 0, _len3 = fontList.length; _k < _len3; _k++) {
+            f = fontList[_k];
+            f = f.replace(/^\s+|\s+$/g, '');
+            if (that.fontPlusInstance.plusf.indexOf(f) > -1) fontNames.push(f);
           }
         }
       }
@@ -41,21 +40,22 @@
 
     _uniqueId = 0;
 
-    function FontPlusUtils(WebFont) {
-      this.WebFont = WebFont;
-      this.events = {};
-      this.fontPlusInstance = _getFontPlusInstance();
-      this.attachLoadEvent(this.getUniqueId(), _checkFontFromStyle(this), 0);
-    }
-
-    FontPlusUtils.prototype.getUniqueId = function() {
+    _getUniqueId = function() {
       var _uid;
       return _uid = "fpu" + (_uniqueId++);
     };
 
+    function FontPlusUtils(WebFont) {
+      this.WebFont = WebFont;
+      if (this.WebFont == null) return;
+      this.events = {};
+      this.fontPlusInstance = _getFontPlusInstance();
+      this.attachLoadEvent(_getUniqueId(), _checkFontFromStyle(this), 0);
+    }
+
     FontPlusUtils.prototype.getFontForText = function(fontNames, text) {
       var d, _fontNames, _uid;
-      _uid = this.getUniqueId();
+      _uid = _getUniqueId();
       _fontNames = fontNames;
       if (_isArray(fontNames)) _fontNames = fontNames.join('", "');
       d = document.createElement('div');
